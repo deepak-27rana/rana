@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Deepak — Digital Marketing Student Portfolio</title>
+<meta name="description" content="Deepak is a digital marketing student building practical skills in SEO, social media marketing, content strategy, paid ads, and analytics. Explore projects, learning journey, and get in touch." />
+<meta name="theme-color" content="#0A0E1A" />
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* ==========================================================================
+   Tokens
+   ========================================================================== */
+:root {
+  --bg: #0A0E1A;
+  --surface: #121A2E;
+  --surface-2: #171F36;
+  --border: #232C48;
+  --text: #F4F6FB;
+  --text-muted: #8B93A7;
+  --accent: #7C5CFC;
+  --accent-2: #2FD9C4;
+  --accent-soft: rgba(124, 92, 252, 0.12);
+
+  --font-head: 'Sora', sans-serif;
+  --font-body: 'Inter', sans-serif;
+
+  --max-width: 1120px;
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 22px;
+
+  --header-height: 76px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ==========================================================================
+   Reset & base
+   ========================================================================== */
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-head);
+  line-height: 1.15;
+  margin: 0;
+  font-weight: 700;
+}
+
+p { margin: 0; }
+a { color: inherit; text-decoration: none; }
+ul, ol { list-style: none; margin: 0; padding: 0; }
+img { max-width: 100%; display: block; }
+button { font: inherit; cursor: pointer; }
+
+:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}
+
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ==========================================================================
+   Reveal-on-scroll (single orchestrated pattern, staggered by section)
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Header / Nav
+   ========================================================================== */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  height: var(--header-height);
+  display: flex;
+  align-items: center;
+  background: rgba(10, 14, 26, 0.7);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+}
+.site-header.is-scrolled {
+  border-bottom-color: var(--border);
+  background: rgba(10, 14, 26, 0.92);
+}
+
+.nav {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.nav__logo {
+  font-family: var(--font-head);
+  font-weight: 800;
+  font-size: 1.25rem;
+  letter-spacing: -0.01em;
+}
+.nav__logo-dot { color: var(--accent); }
+
+.nav__menu {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.nav__link {
+  position: relative;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  padding: 6px 0;
+  transition: color 0.2s var(--ease);
+}
+.nav__link::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: 0;
+  width: 0; height: 2px;
+  background: var(--accent-2);
+  transition: width 0.25s var(--ease);
+}
+.nav__link:hover,
+.nav__link.is-active { color: var(--text); }
+.nav__link:hover::after,
+.nav__link.is-active::after { width: 100%; }
+
+.nav__link--cta {
+  background: var(--accent);
+  color: #fff;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 500;
+}
+.nav__link--cta::after { display: none; }
+.nav__link--cta:hover { background: #6a4be8; color: #fff; }
+
+.nav__toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  padding: 0;
+}
+.nav__toggle span {
+  width: 100%;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.25s var(--ease), opacity 0.25s var(--ease);
+}
+.nav__toggle[aria-expanded="true"] span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav__toggle[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.nav__toggle[aria-expanded="true"] span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 13px 28px;
+  border-radius: 999px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: transform 0.2s var(--ease), background 0.2s var(--ease), border-color 0.2s var(--ease), box-shadow 0.2s var(--ease);
+  border: 1px solid transparent;
+}
+.btn--primary {
+  background: var(--accent);
+  color: #fff;
+  box-shadow: 0 8px 24px -8px rgba(124, 92, 252, 0.6);
+}
+.btn--primary:hover {
+  background: #6a4be8;
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px -8px rgba(124, 92, 252, 0.75);
+}
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border);
+}
+.btn--ghost:hover {
+  border-color: var(--accent-2);
+  color: var(--accent-2);
+  transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   Hero
+   ========================================================================== */
+.hero {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 48px;
+  padding-top: var(--header-height);
+}
+
+.hero__kicker {
+  color: var(--accent-2);
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin-bottom: 14px;
+}
+
+.hero__title {
+  font-size: clamp(2.4rem, 5vw, 3.6rem);
+  letter-spacing: -0.02em;
+  margin-bottom: 22px;
+}
+
+.hero__intro {
+  color: var(--text-muted);
+  font-size: 1.1rem;
+  max-width: 46ch;
+  margin-bottom: 34px;
+}
+
+.hero__actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+.hero__visual {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero__image-frame {
+  width: 260px;
+  height: 260px;
+  border-radius: var(--radius-lg);
+  padding: 4px;
+  background: linear-gradient(160deg, var(--accent), var(--accent-2));
+}
+
+.hero__image-placeholder {
+  width: 100%;
+  height: 100%;
+  border-radius: calc(var(--radius-lg) - 4px);
+  background: var(--surface);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 20px;
+}
+.hero__image-placeholder span { font-weight: 600; }
+.hero__image-placeholder small { color: var(--text-muted); font-size: 0.75rem; }
+
+.hero__chart {
+  width: 100%;
+  max-width: 320px;
+  margin-top: -30px;
+}
+#growthLine {
+  stroke-dasharray: 500;
+  stroke-dashoffset: 500;
+  animation: drawLine 2.2s var(--ease) 0.6s forwards;
+}
+@keyframes drawLine {
+  to { stroke-dashoffset: 0; }
+}
+
+/* ==========================================================================
+   Sections (generic)
+   ========================================================================== */
+.section { padding: 110px 0; }
+.section--alt { background: var(--surface); }
+
+.section__title {
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  letter-spacing: -0.015em;
+  margin-bottom: 14px;
+}
+.section__subtitle {
+  color: var(--text-muted);
+  max-width: 60ch;
+  margin-bottom: 48px;
+}
+.section__subtitle code {
+  background: var(--surface-2);
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.85em;
+}
+
+/* ==========================================================================
+   About
+   ========================================================================== */
+.about__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+.about__text { color: var(--text-muted); font-size: 1.05rem; }
+.about__text strong { color: var(--text); font-weight: 600; }
+
+/* ==========================================================================
+   Skills
+   ========================================================================== */
+.skills__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px 48px;
+}
+.skill__head {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 0.95rem;
+}
+.skill__pct { color: var(--accent-2); font-weight: 600; }
+.skill__bar {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--surface-2);
+  overflow: hidden;
+}
+.skill__fill {
+  height: 100%;
+  width: 0%;
+  border-radius: 999px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  transition: width 1.1s var(--ease);
+}
+
+/* ==========================================================================
+   Projects
+   ========================================================================== */
+.projects__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+.project-card {
+  position: relative;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  padding: 28px 24px 24px;
+  transition: transform 0.25s var(--ease), border-color 0.25s var(--ease);
+}
+.project-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+}
+.project-card__accent {
+  position: absolute;
+  top: 0; left: 24px; right: 24px;
+  height: 3px;
+  border-radius: 0 0 4px 4px;
+  background: var(--accent, var(--accent));
+  background: var(--accent);
+}
+.project-card__accent { background: var(--accent-2); }
+.project-card:nth-child(odd) .project-card__accent { background: var(--accent); }
+
+.project-card__tag {
+  display: inline-block;
+  font-size: 0.72rem;
+  color: var(--accent-2);
+  background: rgba(47, 217, 196, 0.1);
+  padding: 3px 10px;
+  border-radius: 999px;
+  margin-bottom: 16px;
+}
+.project-card h3 { font-size: 1.15rem; margin-bottom: 10px; }
+.project-card p { color: var(--text-muted); font-size: 0.92rem; margin-bottom: 18px; }
+.project-card__tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+.project-card__tools span {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  background: var(--surface-2);
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+.project-card__link {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--accent-2);
+  transition: opacity 0.2s var(--ease);
+}
+.project-card__link:hover { opacity: 0.75; }
+
+/* ==========================================================================
+   Timeline
+   ========================================================================== */
+.timeline {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding-left: 32px;
+  border-left: 2px solid var(--border);
+}
+.timeline__item {
+  position: relative;
+  padding-bottom: 42px;
+}
+.timeline__item:last-child { padding-bottom: 0; }
+.timeline__item::before {
+  content: '';
+  position: absolute;
+  left: -38px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 2px solid var(--accent-2);
+}
+.timeline__date {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--accent-2);
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+.timeline__body h3 { font-size: 1.05rem; margin-bottom: 6px; }
+.timeline__body p { color: var(--text-muted); font-size: 0.92rem; }
+
+/* ==========================================================================
+   Tools
+   ========================================================================== */
+.tools__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.tool {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 16px 18px;
+  font-size: 0.92rem;
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.tool:hover { border-color: var(--accent); transform: translateY(-3px); }
+.tool__badge {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 0.72rem;
+  background: var(--accent-soft);
+  color: var(--accent-2);
+}
+
+/* ==========================================================================
+   Why work with me
+   ========================================================================== */
+.why__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+.why__item {
+  padding: 24px;
+  border-radius: var(--radius-md);
+  background: var(--bg);
+  border: 1px solid var(--border);
+}
+.why__item h3 { font-size: 1.05rem; margin-bottom: 8px; }
+.why__item p { color: var(--text-muted); font-size: 0.9rem; }
+
+/* ==========================================================================
+   Contact
+   ========================================================================== */
+.contact__grid {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: 48px;
+}
+.contact__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+.field input, .field textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  transition: border-color 0.2s var(--ease);
+  resize: vertical;
+}
+.field input:focus, .field textarea:focus {
+  outline: none;
+  border-color: var(--accent-2);
+}
+.contact__form .btn { align-self: flex-start; margin-top: 6px; }
+.contact__status {
+  font-size: 0.88rem;
+  color: var(--accent-2);
+  min-height: 1.2em;
+}
+
+.contact__links {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.contact__link {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 16px 18px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.2s var(--ease), transform 0.2s var(--ease);
+}
+.contact__link:hover { border-color: var(--accent); transform: translateX(4px); }
+.contact__link strong { font-size: 0.85rem; color: var(--text-muted); font-weight: 500; }
+.contact__link span { font-size: 0.98rem; }
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 32px 0;
+}
+.site-footer__inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+.site-footer__social { display: flex; gap: 14px; }
+.site-footer__social a {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  transition: border-color 0.2s var(--ease), color 0.2s var(--ease);
+}
+.site-footer__social a:hover { border-color: var(--accent-2); color: var(--accent-2); }
+
+.back-to-top {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  font-size: 1.1rem;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(10px);
+  transition: opacity 0.25s var(--ease), transform 0.25s var(--ease), visibility 0.25s;
+  z-index: 90;
+}
+.back-to-top.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.back-to-top:hover { background: #6a4be8; }
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 40px; text-align: left; padding-top: calc(var(--header-height) + 20px); min-height: auto; padding-bottom: 60px; }
+  .hero__visual { order: -1; max-width: 320px; }
+  .about__grid { grid-template-columns: 1fr; }
+  .skills__grid { grid-template-columns: 1fr; }
+  .projects__grid { grid-template-columns: repeat(2, 1fr); }
+  .why__grid { grid-template-columns: repeat(2, 1fr); }
+  .tools__grid { grid-template-columns: repeat(2, 1fr); }
+  .contact__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 640px) {
+  .nav__toggle { display: flex; }
+  .nav__menu {
+    position: fixed;
+    top: var(--header-height);
+    left: 0; right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: rgba(10, 14, 26, 0.98);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s var(--ease);
+  }
+  .nav__menu.is-open { max-height: 400px; }
+  .nav__menu li { border-top: 1px solid var(--border); }
+  .nav__link { display: block; padding: 16px 24px; }
+  .nav__link--cta { margin: 16px 24px; text-align: center; }
+
+  .projects__grid { grid-template-columns: 1fr; }
+  .why__grid { grid-template-columns: 1fr; }
+  .tools__grid { grid-template-columns: 1fr 1fr; }
+  .section { padding: 80px 0; }
+}
+
+</style>
+</head>
+<body>
+
+<!-- ============ NAVIGATION ============ -->
+<header class="site-header" id="site-header">
+  <nav class="nav container" aria-label="Primary">
+    <a href="#top" class="nav__logo">Deepak<span class="nav__logo-dot">.</span></a>
+
+    <button class="nav__toggle" id="navToggle" aria-expanded="false" aria-controls="navMenu" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <ul class="nav__menu" id="navMenu">
+      <li><a href="#about" class="nav__link">About</a></li>
+      <li><a href="#skills" class="nav__link">Skills</a></li>
+      <li><a href="#projects" class="nav__link">Projects</a></li>
+      <li><a href="#journey" class="nav__link">Journey</a></li>
+      <li><a href="#tools" class="nav__link">Tools</a></li>
+      <li><a href="#contact" class="nav__link nav__link--cta">Contact</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="top">
+
+  <!-- ============ HERO ============ -->
+  <section class="hero container" id="hero">
+    <div class="hero__text reveal">
+      <p class="hero__kicker">Digital Marketing Student</p>
+      <h1 class="hero__title">Hi, I'm Deepak <span aria-hidden="true">👋</span></h1>
+      <p class="hero__intro">
+        I'm a passionate digital marketing student exploring SEO, social media marketing,
+        content marketing, branding, and online growth strategies — one project and one
+        experiment at a time.
+      </p>
+      <div class="hero__actions">
+        <a href="#projects" class="btn btn--primary">View My Work</a>
+        <a href="#contact" class="btn btn--ghost">Contact Me</a>
+      </div>
+    </div>
+
+    <div class="hero__visual reveal" aria-hidden="true">
+      <div class="hero__image-frame">
+        <div class="hero__image-placeholder">
+          <span>Add your photo</span>
+          <small>Replace .hero__image-placeholder in index.html</small>
+        </div>
+      </div>
+      <svg class="hero__chart" viewBox="0 0 320 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path id="growthLine" d="M0 110 C 40 100, 60 120, 90 95 C 120 70, 140 90, 170 65 C 200 40, 220 55, 250 30 C 275 10, 295 20, 320 5"
+          stroke="url(#lineGradient)" stroke-width="3" stroke-linecap="round" fill="none"/>
+        <defs>
+          <linearGradient id="lineGradient" x1="0" y1="0" x2="320" y2="0" gradientUnits="userSpaceOnUse">
+            <stop stop-color="#7C5CFC"/>
+            <stop offset="1" stop-color="#2FD9C4"/>
+          </linearGradient>
+        </defs>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT ============ -->
+  <section class="section" id="about">
+    <div class="container">
+      <h2 class="section__title reveal">About Me</h2>
+      <div class="about__grid">
+        <p class="about__text reveal">
+          I'm currently studying digital marketing and building practical, hands-on skills through
+          coursework, self-guided projects, and daily experimentation. I'm drawn to the mix of
+          creativity and data that the field demands — writing a headline is only half the job;
+          understanding why it did or didn't work is the other half.
+        </p>
+        <p class="about__text reveal">
+          Right now I'm developing skills across <strong>SEO</strong>, <strong>Social Media Marketing</strong>,
+          <strong>Content Marketing</strong>, <strong>Google Ads</strong>, <strong>Email Marketing</strong>,
+          <strong>Analytics</strong>, <strong>Branding</strong>, and <strong>Digital Strategy</strong>.
+          I don't have professional client work yet — this portfolio is a record of what I'm learning
+          and building along the way, and it will keep growing as I take on real projects.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SKILLS ============ -->
+  <section class="section section--alt" id="skills">
+    <div class="container">
+      <h2 class="section__title reveal">Skills</h2>
+      <p class="section__subtitle reveal">Levels are self-rated and updated as I practice — edit the <code>data-level</code> values in index.html anytime.</p>
+
+      <div class="skills__grid reveal">
+        <div class="skill" data-level="70"><div class="skill__head"><span>SEO</span><span class="skill__pct">70%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="75"><div class="skill__head"><span>Social Media Marketing</span><span class="skill__pct">75%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="80"><div class="skill__head"><span>Content Creation</span><span class="skill__pct">80%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="55"><div class="skill__head"><span>Google Ads</span><span class="skill__pct">55%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="50"><div class="skill__head"><span>Meta Ads</span><span class="skill__pct">50%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="65"><div class="skill__head"><span>Keyword Research</span><span class="skill__pct">65%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="60"><div class="skill__head"><span>Google Analytics</span><span class="skill__pct">60%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="85"><div class="skill__head"><span>Canva</span><span class="skill__pct">85%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="70"><div class="skill__head"><span>Copywriting</span><span class="skill__pct">70%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+        <div class="skill" data-level="45"><div class="skill__head"><span>Email Marketing</span><span class="skill__pct">45%</span></div><div class="skill__bar"><div class="skill__fill"></div></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROJECTS ============ -->
+  <section class="section" id="projects">
+    <div class="container">
+      <h2 class="section__title reveal">My Projects</h2>
+      <p class="section__subtitle reveal">Placeholder projects below — swap in your real work whenever you have it. Each card is clearly marked.</p>
+
+      <div class="projects__grid">
+        <article class="project-card reveal">
+          <span class="project-card__tag">Placeholder</span>
+          <div class="project-card__accent" style="--accent:#7C5CFC"></div>
+          <h3>Instagram Growth Experiment</h3>
+          <p>A 30-day content and posting-schedule experiment for a small local brand's Instagram account, testing formats and captions to grow engagement.</p>
+          <div class="project-card__tools">
+            <span>Canva</span><span>Instagram Insights</span><span>Content Calendar</span>
+          </div>
+          <a href="#" class="project-card__link">View Project →</a>
+        </article>
+
+        <article class="project-card reveal">
+          <span class="project-card__tag">Placeholder</span>
+          <div class="project-card__accent" style="--accent:#2FD9C4"></div>
+          <h3>SEO Audit — Personal Blog</h3>
+          <p>An on-page SEO audit and keyword research exercise on a personal blog, covering meta tags, headings, and internal linking structure.</p>
+          <div class="project-card__tools">
+            <span>SEO</span><span>Keyword Research</span><span>Google Search Console</span>
+          </div>
+          <a href="#" class="project-card__link">View Project →</a>
+        </article>
+
+        <article class="project-card reveal">
+          <span class="project-card__tag">Placeholder</span>
+          <div class="project-card__accent" style="--accent:#7C5CFC"></div>
+          <h3>Mock Google Ads Campaign</h3>
+          <p>A practice Google Ads campaign structure built in the Ads editor, including ad groups, sample copy variations, and a keyword match-type strategy.</p>
+          <div class="project-card__tools">
+            <span>Google Ads</span><span>Copywriting</span><span>Keyword Strategy</span>
+          </div>
+          <a href="#" class="project-card__link">View Project →</a>
+        </article>
+
+        <article class="project-card reveal">
+          <span class="project-card__tag">Placeholder</span>
+          <div class="project-card__accent" style="--accent:#2FD9C4"></div>
+          <h3>Brand Content Calendar</h3>
+          <p>A month-long social content calendar concept for a fictional D2C brand, with themes, post types, and a posting cadence.</p>
+          <div class="project-card__tools">
+            <span>Content Strategy</span><span>Canva</span><span>Branding</span>
+          </div>
+          <a href="#" class="project-card__link">View Project →</a>
+        </article>
+
+        <article class="project-card reveal">
+          <span class="project-card__tag">Placeholder</span>
+          <div class="project-card__accent" style="--accent:#7C5CFC"></div>
+          <h3>Analytics Dashboard Practice</h3>
+          <p>A Google Analytics practice report tracking traffic sources and behaviour flow for a demo account, summarised into key takeaways.</p>
+          <div class="project-card__tools">
+            <span>Google Analytics</span><span>Reporting</span><span>Data Analysis</span>
+          </div>
+          <a href="#" class="project-card__link">View Project →</a>
+        </article>
+
+        <article class="project-card reveal">
+          <span class="project-card__tag">Placeholder</span>
+          <div class="project-card__accent" style="--accent:#2FD9C4"></div>
+          <h3>Email Welcome Sequence</h3>
+          <p>A 3-email welcome sequence draft for a newsletter signup, focused on tone, structure, and a clear call-to-action in each email.</p>
+          <div class="project-card__tools">
+            <span>Email Marketing</span><span>Copywriting</span><span>Automation Basics</span>
+          </div>
+          <a href="#" class="project-card__link">View Project →</a>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ LEARNING JOURNEY ============ -->
+  <section class="section section--alt" id="journey">
+    <div class="container">
+      <h2 class="section__title reveal">My Learning Journey</h2>
+      <p class="section__subtitle reveal">Edit dates and milestones in index.html as your journey continues.</p>
+
+      <ol class="timeline">
+        <li class="timeline__item reveal">
+          <span class="timeline__date">2024</span>
+          <div class="timeline__body">
+            <h3>Started learning digital marketing</h3>
+            <p>Began exploring the fundamentals — how search, social, and paid channels fit together.</p>
+          </div>
+        </li>
+        <li class="timeline__item reveal">
+          <span class="timeline__date">2024</span>
+          <div class="timeline__body">
+            <h3>Learned SEO fundamentals</h3>
+            <p>On-page SEO, keyword research basics, and how search engines evaluate content.</p>
+          </div>
+        </li>
+        <li class="timeline__item reveal">
+          <span class="timeline__date">2025</span>
+          <div class="timeline__body">
+            <h3>Started working on content strategy</h3>
+            <p>Learned to plan content around audience intent rather than just posting frequency.</p>
+          </div>
+        </li>
+        <li class="timeline__item reveal">
+          <span class="timeline__date">2025</span>
+          <div class="timeline__body">
+            <h3>Learned paid advertising</h3>
+            <p>Explored Google Ads and Meta Ads structures, targeting, and budget basics.</p>
+          </div>
+        </li>
+        <li class="timeline__item reveal">
+          <span class="timeline__date">2025</span>
+          <div class="timeline__body">
+            <h3>Practiced analytics</h3>
+            <p>Started reading traffic and behaviour data in Google Analytics to inform decisions.</p>
+          </div>
+        </li>
+        <li class="timeline__item reveal">
+          <span class="timeline__date">2026</span>
+          <div class="timeline__body">
+            <h3>Built personal projects</h3>
+            <p>Applied everything above to the practice projects shown in this portfolio.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ TOOLS ============ -->
+  <section class="section" id="tools">
+    <div class="container">
+      <h2 class="section__title reveal">Tools I Use</h2>
+      <div class="tools__grid reveal">
+        <div class="tool"><span class="tool__badge">GA</span>Google Analytics</div>
+        <div class="tool"><span class="tool__badge">GSC</span>Google Search Console</div>
+        <div class="tool"><span class="tool__badge">GA+</span>Google Ads</div>
+        <div class="tool"><span class="tool__badge">M</span>Meta Ads Manager</div>
+        <div class="tool"><span class="tool__badge">C</span>Canva</div>
+        <div class="tool"><span class="tool__badge">WP</span>WordPress</div>
+        <div class="tool"><span class="tool__badge">SR</span>Semrush / Ahrefs</div>
+        <div class="tool"><span class="tool__badge">AI</span>ChatGPT / AI Tools</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ WHY WORK WITH ME ============ -->
+  <section class="section section--alt" id="why">
+    <div class="container">
+      <h2 class="section__title reveal">Why Work With Me</h2>
+      <div class="why__grid">
+        <div class="why__item reveal"><h3>Curious learner</h3><p>I ask why a campaign worked, not just whether it did.</p></div>
+        <div class="why__item reveal"><h3>Creative thinker</h3><p>I enjoy coming up with content angles and testing them.</p></div>
+        <div class="why__item reveal"><h3>Data-driven mindset</h3><p>I'm learning to let numbers guide decisions over guesswork.</p></div>
+        <div class="why__item reveal"><h3>Strong interest in online growth</h3><p>Growth loops and channel strategy genuinely interest me.</p></div>
+        <div class="why__item reveal"><h3>Willingness to experiment</h3><p>I'd rather test a small idea than wait for a perfect plan.</p></div>
+        <div class="why__item reveal"><h3>Continuous learner</h3><p>I'm building new skills every week, in public, in this portfolio.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACT ============ -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2 class="section__title reveal">Get In Touch</h2>
+      <p class="section__subtitle reveal">Have an internship, freelance project, or feedback? I'd love to hear from you.</p>
+
+      <div class="contact__grid">
+        <form class="contact__form reveal" id="contactForm" novalidate>
+          <label class="field">
+            <span>Name</span>
+            <input type="text" name="name" required placeholder="Your name" />
+          </label>
+          <label class="field">
+            <span>Email</span>
+            <input type="email" name="email" required placeholder="you@example.com" />
+          </label>
+          <label class="field">
+            <span>Message</span>
+            <textarea name="message" rows="5" required placeholder="Tell me a bit about the opportunity or project..."></textarea>
+          </label>
+          <button type="submit" class="btn btn--primary">Send Message</button>
+          <p class="contact__status" id="contactStatus" role="status" aria-live="polite"></p>
+        </form>
+
+        <div class="contact__links reveal">
+          <a href="mailto:your-email@example.com" class="contact__link">
+            <strong>Email</strong><span>your-email@example.com</span>
+          </a>
+          <a href="https://linkedin.com/in/your-profile" class="contact__link" target="_blank" rel="noopener">
+            <strong>LinkedIn</strong><span>linkedin.com/in/your-profile</span>
+          </a>
+          <a href="https://instagram.com/your-handle" class="contact__link" target="_blank" rel="noopener">
+            <strong>Instagram</strong><span>@your-handle</span>
+          </a>
+          <a href="https://github.com/your-username" class="contact__link" target="_blank" rel="noopener">
+            <strong>GitHub</strong><span>github.com/your-username</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <p>&copy; 2026 Deepak. All Rights Reserved.</p>
+    <div class="site-footer__social" aria-label="Social media links">
+      <a href="mailto:your-email@example.com" aria-label="Email">✉</a>
+      <a href="https://linkedin.com/in/your-profile" aria-label="LinkedIn" target="_blank" rel="noopener">in</a>
+      <a href="https://instagram.com/your-handle" aria-label="Instagram" target="_blank" rel="noopener">◎</a>
+      <a href="https://github.com/your-username" aria-label="GitHub" target="_blank" rel="noopener">⌥</a>
+    </div>
+  </div>
+</footer>
+
+<button id="backToTop" class="back-to-top" aria-label="Back to top">↑</button>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+
+  /* ---------------------------------------------------------
+     Mobile hamburger menu
+  --------------------------------------------------------- */
+  const navToggle = document.getElementById('navToggle');
+  const navMenu = document.getElementById('navMenu');
+
+  navToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
+
+  // Close mobile menu after clicking a link
+  navMenu.querySelectorAll('.nav__link').forEach(link => {
+    link.addEventListener('click', () => {
+      navMenu.classList.remove('is-open');
+      navToggle.setAttribute('aria-expanded', 'false');
+    });
+  });
+
+  /* ---------------------------------------------------------
+     Header background + shadow on scroll
+  --------------------------------------------------------- */
+  const header = document.getElementById('site-header');
+  const backToTop = document.getElementById('backToTop');
+
+  const onScroll = () => {
+    const scrolled = window.scrollY > 40;
+    header.classList.toggle('is-scrolled', scrolled);
+    backToTop.classList.toggle('is-visible', window.scrollY > 500);
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+
+  /* ---------------------------------------------------------
+     Active nav link based on section in view
+  --------------------------------------------------------- */
+  const sections = document.querySelectorAll('main section[id]');
+  const navLinks = document.querySelectorAll('.nav__link');
+
+  const setActiveLink = (id) => {
+    navLinks.forEach(link => {
+      link.classList.toggle('is-active', link.getAttribute('href') === `#${id}`);
+    });
+  };
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        setActiveLink(entry.target.id);
+      }
+    });
+  }, { rootMargin: '-45% 0px -50% 0px', threshold: 0 });
+
+  sections.forEach(section => sectionObserver.observe(section));
+
+  /* ---------------------------------------------------------
+     Scroll-reveal animations (staggered within each section)
+  --------------------------------------------------------- */
+  const revealEls = document.querySelectorAll('.reveal');
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry, index) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const siblings = Array.from(el.parentElement.querySelectorAll('.reveal'));
+        const delayIndex = siblings.indexOf(el);
+        el.style.transitionDelay = `${Math.min(delayIndex, 6) * 80}ms`;
+        el.classList.add('is-visible');
+        revealObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  revealEls.forEach(el => revealObserver.observe(el));
+
+  /* ---------------------------------------------------------
+     Animate skill bars once visible
+  --------------------------------------------------------- */
+  const skillEls = document.querySelectorAll('.skill');
+
+  const skillObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const level = el.getAttribute('data-level') || '0';
+        const fill = el.querySelector('.skill__fill');
+        const pct = el.querySelector('.skill__pct');
+        requestAnimationFrame(() => {
+          fill.style.width = `${level}%`;
+        });
+        if (pct) pct.textContent = `${level}%`;
+        skillObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.4 });
+
+  skillEls.forEach(el => skillObserver.observe(el));
+
+  /* ---------------------------------------------------------
+     Contact form (front-end only — no backend wired up)
+  --------------------------------------------------------- */
+  const contactForm = document.getElementById('contactForm');
+  const contactStatus = document.getElementById('contactStatus');
+
+  contactForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const name = contactForm.name.value.trim();
+    const email = contactForm.email.value.trim();
+    const message = contactForm.message.value.trim();
+    const age = contactForm.message.value.trim();
+
+    if (!name || !email || !message || !age) {
+      contactStatus.textContent = 'Please fill in every field before sending.';
+      contactStatus.style.color = '#ff8080';
+      return;
+    }
+
+    // NOTE: This form has no backend yet. Connect it to a service
+    // like Formspree, EmailJS, or your own endpoint to actually send messages.
+    contactStatus.textContent = `Thanks, ${name}! This form isn't connected to an email service yet — add one so messages actually reach you.`;
+    contactStatus.style.color = '';
+    contactForm.reset();
+  });
+
+});
+
+</script>
+</body>
+</html>
